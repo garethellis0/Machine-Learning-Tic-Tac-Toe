@@ -1,7 +1,5 @@
 module BaseGame where
 
-import Data.Time.Clock.POSIX as Time
-import System.Random
 
 type Value = Float
 type Move = Int
