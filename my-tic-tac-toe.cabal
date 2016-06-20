@@ -54,10 +54,13 @@ executable my-tic-tac-toe
   -- other-modules:       
   
   -- LANGUAGE extensions used by modules in this package.
-  -- other-extensions:    
+  other-extensions: ScopedTypeVariables    
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8
+  build-depends:       base >=4.8, 
+                       random >=1.1,
+                       time >=1.6,
+                       containers >=0.5.7.1
   
   -- Directories containing source files.
   -- hs-source-dirs:      
