@@ -1,5 +1,6 @@
 module BaseGame where
 
+import System.Random
 
 type Value = Float
 type Move = Int
