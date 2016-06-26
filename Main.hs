@@ -40,7 +40,7 @@ mainLoop currIteration gState moveToMake aiMovesMade = do
         gen <- getStdGen
         gen' <- newStdGen
         randomMove <- getRandomMove gen
-        putStrLn "Random Move:" ++ show randomMove
+        putStrLn ("Random Move:" ++ show randomMove)
         if activePlayer gState == Human then do
             move <- getHumanMove
             mainLoop currIteration (applyMove move gState) moveToMake aiMovesMade
