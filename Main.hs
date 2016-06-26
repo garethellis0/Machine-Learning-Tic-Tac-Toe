@@ -9,8 +9,7 @@ import System.Random
 numOfIterations = 1000
 
 main :: IO ()
-main = do
-    mainLoop 0 initialGameState initialMoveToMake []
+main = mainLoop 0 initialGameState initialMoveToMake []
 
 
 mainLoop :: Int -> GameState -> AIDecisions -> [(GameState, Move)] -> IO ()
@@ -21,17 +20,17 @@ mainLoop currIteration gState moveToMake aiMovesMade = do
     if gameOver gState || draw gState then
             if draw gState then do
                         putStrLn "Draw" 
-                        let newMoveToMake = (updateAI aiMovesMade moveToMake Draw)
+                        let newMoveToMake = updateAI aiMovesMade moveToMake Draw
                         mainLoop (currIteration+1) initialGameState newMoveToMake []
             else
                 -- | Create a new game, updating the AI's strategy depending on if it won or lost
-                if (activePlayer gState == Human) then do
+                if activePlayer gState == Human then do
                     putStrLn "AI wins!"
-                    let newMoveToMake = (updateAI aiMovesMade moveToMake Win)
+                    let newMoveToMake = updateAI aiMovesMade moveToMake Win
                     mainLoop (currIteration+1) initialGameState newMoveToMake []
                 else do
                     putStrLn "Human wins!"
-                    let newMoveToMake = (updateAI aiMovesMade moveToMake Lose)
+                    let newMoveToMake = updateAI aiMovesMade moveToMake Lose
                     mainLoop (currIteration+1) initialGameState newMoveToMake []
     -- | Get the next move and apply it
     else do
@@ -41,8 +40,8 @@ mainLoop currIteration gState moveToMake aiMovesMade = do
         gen <- getStdGen
         gen' <- newStdGen
         randomMove <- getRandomMove gen
-        putStrLn ("Random Move:" ++ (show randomMove))
-        if (activePlayer gState) == Human then do
+        putStrLn "Random Move:" ++ show randomMove
+        if activePlayer gState == Human then do
             move <- getHumanMove
             mainLoop currIteration (applyMove move gState) moveToMake aiMovesMade
             {-
@@ -53,6 +52,6 @@ mainLoop currIteration gState moveToMake aiMovesMade = do
                 mainLoop currIteration (applyMove randomMove gState) moveToMake aiMovesMade
             -}
         else do
-            let move = (getAIMove randomMove moveToMake gState)
+            let move = getAIMove randomMove moveToMake gState
             -- | Get the AI move and apply it, remember the (state,move) for later updating of values
             mainLoop currIteration (applyMove move gState) moveToMake ((gState, move):aiMovesMade)
